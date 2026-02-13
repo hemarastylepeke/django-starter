@@ -1,3 +1,4 @@
+from datetime import timedelta
 from decouple import config
 from pathlib import Path
 import os
@@ -155,6 +156,7 @@ EMAIL_BACKEND = config('EMAIL_BACKEND')
 # AWS_S3_VERITY = True
 # DEFAULT_FILE_STORAGE = config('DEFAULT_FILE_STORAGE')
 
+
 # Authentication Backends
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend'
@@ -190,14 +192,39 @@ CORS_ALLOWED_ORIGINS = (
 )
 CORS_ALLOW_CREDENTIALS = True
 
+# Token lifetimes (single source of truth)
+ACCESS_TOKEN_LIFETIME = 60 * 15  # 15 minutes
+REFRESH_TOKEN_LIFETIME = 60 * 60 * 24  # 1 day
+
 # Cookie settings
 AUTH_COOKIE = 'access'
-AUTH_COOKIE_ACCESS_MAX_AGE = 60 * 5
-AUTH_COOKIE_REFRESH_MAX_AGE = 60 * 60 * 24
+AUTH_COOKIE_ACCESS_MAX_AGE = ACCESS_TOKEN_LIFETIME
+AUTH_COOKIE_REFRESH_MAX_AGE = REFRESH_TOKEN_LIFETIME
 AUTH_COOKIE_SECURE = config('AUTH_COOKIE_SECURE', 'True') == 'True'
 AUTH_COOKIE_HTTP_ONLY = True
 AUTH_COOKIE_PATH = '/'
 AUTH_COOKIE_SAMESITE = 'None'
+
+# Simple JWT settings
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(seconds=ACCESS_TOKEN_LIFETIME),
+    'REFRESH_TOKEN_LIFETIME': timedelta(seconds=REFRESH_TOKEN_LIFETIME),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': False,
+    'UPDATE_LAST_LOGIN': True,
+    
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+    'JTI_CLAIM': 'jti',
+}
 
 # Custom user model
 AUTH_USER_MODEL = 'accounts.UserAccount'

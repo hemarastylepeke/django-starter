@@ -17,7 +17,6 @@
 - python manage.py migrate
 - python manage.py runserver
 
-
 ## Endpoints
 
 - User Registration: POST /api/auth/users/
