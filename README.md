@@ -20,15 +20,15 @@
 
 ## Endpoints
 
-- User Registration: POST /api/users/
-- JWT Token Creation: POST /api/jwt/create/
-- User Activation: POST /api/users/activation/
-- JWT Token Refresh: POST /api/jwt/refresh/
-- JWT Token Verification: POST /api/jwt/verify/
-- User Profile Details: GET /api/users/me/
-- Password Reset Request: POST /api/users/reset_password/
-- Password Reset Confirmation: POST /api/users/reset_password_confirm/
-- User Logout: POST /api/logout/
+- User Registration: POST /api/auth/users/
+- JWT Token Creation: POST /api/auth/jwt/create/
+- User Activation: POST /api/auth/users/activation/
+- JWT Token Refresh: POST /api/auth/jwt/refresh/
+- JWT Token Verification: POST /api/auth/jwt/verify/
+- User Profile Details: GET /api/auth/users/me/
+- Password Reset Request: POST /api/auth/users/reset_password/
+- Password Reset Confirmation: POST /api/auth/users/reset_password_confirm/
+- User Logout: POST /api/auth/logout/
 
 
 ##Usage
